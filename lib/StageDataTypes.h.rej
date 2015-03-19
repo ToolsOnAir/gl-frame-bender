@@ -1,0 +1,52 @@
+--- lib/StageDataTypes.h
++++ lib/StageDataTypes.h
+@@ -59,9 +59,48 @@ namespace toa {
+ 
+             ~TokenGL() {
+                 if (gl_fence && glIsSync(gl_fence)) {
+-                    glDeleteSync(gl_fence);
++                    //glDeleteSync(gl_fence);
++                    gl_fence = 0;
+                 }
+             }
++
++            TokenGL& operator=(TokenGL&& other) {
++                this->gl_fence = other.gl_fence;
++                other.gl_fence = 0;
++                this->id = other.id;
++                other.id = 0;
++                this->format = other.format;
++                this->composition = other.composition;
++                other.composition = nullptr;
++                this->fbo_id = other.fbo_id;
++                other.fbo_id = 0;
++                this->time_stamp = std::move(other.time_stamp);
++                this->buffer = other.buffer;
++                other.buffer = nullptr;
++                return *this;
++            }
++
++            TokenGL(TokenGL&& other) :
++                gl_fence(other.gl_fence),
++                id(other.id),
++                format(other.format),
++                composition(other.composition),
++                fbo_id(other.fbo_id),
++                time_stamp(other.time_stamp),
++                buffer(other.buffer) {
++                    other.gl_fence = 0;
++                    other.id = 0;
++                    other.composition = nullptr;
++                    other.fbo_id = 0;
++                    other.time_stamp = 0;
++                    other.buffer = nullptr;
++            }
++
++        private:
++            TokenGL& operator=(const TokenGL&);
++            TokenGL(const TokenGL&);
++
++
+         };
+ 
+         // TODO-C++11: replace with =default or =delete

@@ -1,0 +1,80 @@
+package fbt_format;
+
+message StageTrace {
+
+    enum EventType {
+
+        EXECUTE_BEGIN           = 1;
+        INPUT_TOKEN_AVAILABLE   = 2;
+        OUTPUT_TOKEN_AVAILABLE  = 3;
+        TASK_BEGIN              = 4;
+        TASK_END                = 5;
+        EXECUTE_END             = 6;
+        GL_TASK_BEGIN           = 7;
+        GL_TASK_END             = 8;
+
+    }    
+
+    message EventNameMapping {
+        
+        required EventType type =1;
+        required string name = 2;
+
+    }
+
+    message DeltaStatistic {
+
+        required string name = 1;
+        required EventType begin_event = 2;
+        required EventType end_event = 3;
+        required sint64 average_ns = 4;
+        required sint64 minimum_ns = 5;
+        required sint64 maximum_ns = 6;
+        required sint64 std_deviation_ns = 7;
+        required sint64 median_ns = 8;
+        required uint64 num_samples = 9;
+
+    }
+
+    message EventTrace {
+
+        required EventType type = 1;
+        repeated sint64 trace_times_ns = 2 [packed=true];
+
+    }
+
+    required string name = 1; // e.g. "UnmapPboStage"
+    repeated EventTrace event_traces = 2;
+    repeated EventNameMapping name_overrides = 3;
+    repeated DeltaStatistic delta_statistics = 4;
+}
+
+message OpenGLInfo {
+    
+    required string vendor = 1;
+    required string renderer = 2;
+    required string version = 3;
+
+}
+
+message TraceSession {
+
+    message SessionStatistic {
+        required uint64 number_of_frames_processed = 1;
+        required float avg_throughput_mb_per_sec = 2;
+        required sint64 med_frame_processing_time_per_frame_ns = 3;
+		optional float avg_millisecs_per_frame = 4;
+    }
+
+    // Something human-readable
+    required string name = 1;
+
+    required OpenGLInfo opengl_info = 2;
+
+    required string local_time = 3;
+
+    repeated StageTrace stage_traces = 4;
+
+    optional SessionStatistic session_statistic = 5;
+
+}
