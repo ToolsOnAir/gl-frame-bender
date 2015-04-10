@@ -25,7 +25,7 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 	set(Protobuf_LIBRARIES "libprotobuf.lib" "zlibstat.lib")
 	set(Protobuf_LIBRARIES_DEBUG "libprotobufd.lib" "zlibstat.lib")
 
-  set(IPP_PLATFORM_LIBRARIES "ippi.lib")
+	set(IPP_PLATFORM_LIBRARIES "ippimt.lib" "ippcoremt.lib")
 
 	set(USER_BOOST_ROOT "C:\\local\\boost_1_57_0" CACHE PATH "Root directory of Boost installation")
 	set(BOOST_ROOT ${USER_BOOST_ROOT})
