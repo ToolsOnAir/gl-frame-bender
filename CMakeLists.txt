@@ -27,7 +27,8 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
   set(IPP_PLATFORM_LIBRARIES "ippi_l.lib" "ippcore_l.lib")
 
-	set(BOOST_ROOT "C:\\local\\boost_1_57_0" CACHE PATH "Root directory of Boost installation")
+	set(USER_BOOST_ROOT "C:\\local\\boost_1_57_0" CACHE PATH "Root directory of Boost installation")
+	set(BOOST_ROOT ${USER_BOOST_ROOT})
 	set(BOOST_LIBRARYDIR "${BOOST_ROOT}/lib64-msvc-12.0")
 
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
