@@ -53,7 +53,7 @@ ELSE(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
-set(USE_IPP FALSE CACHE BOOL "Use Intel IPP library")
+set(USE_INTEL_IPP FALSE CACHE BOOL "Use Intel IPP library")
 set(IPP_USER_INCLUDE_DIR "" CACHE PATH "Header directoy of Intel IPP library")
 set(IPP_USER_LIBRARY_DIR "" CACHE PATH "Library directory of Intel IPP library")
 
@@ -67,6 +67,8 @@ IF(${USE_INTEL_IPP})
   set (IPP_LIBRARY_DIRS ${IPP_USER_LIBRARY_DIR})
   include_directories(${IPP_INCLUDE_DIRS})
   link_directories(${IPP_LIBRARY_DIRS})
+ELSE(${USE_INTEL_IPP})
+  message("Will not use Intel IPP library")
 ENDIF(${USE_INTEL_IPP})
 
 set(Boost_USE_STATIC_LIBS ON)
