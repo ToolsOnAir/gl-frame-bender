@@ -36,6 +36,11 @@ add_custom_command(TARGET gl-frame-bender POST_BUILD
     $<TARGET_FILE_DIR:gl-frame-bender>)
 
 add_custom_command(TARGET gl-frame-bender POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different        
+    "${PROJECT_SOURCE_DIR}/resources/SimpleBenchmarkPreset.cfg"        
+    $<TARGET_FILE_DIR:gl-frame-bender>)
+
+add_custom_command(TARGET gl-frame-bender POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory       
     "${PROJECT_SOURCE_DIR}/glsl"        
     $<TARGET_FILE_DIR:gl-frame-bender>/glsl)
