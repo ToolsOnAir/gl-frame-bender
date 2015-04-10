@@ -37,7 +37,27 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 	    "${PROJECT_SOURCE_DIR}/external/devil/lib/msvc_x64/ILUT.dll"        
 	    $<TARGET_FILE_DIR:gl-frame-bender-tests>)
 
-
 ELSE(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 	target_link_libraries(gl-frame-bender-tests PRIVATE ${Protobuf_LIBRARIES})
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+
+add_custom_command(TARGET gl-frame-bender-tests POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different        
+    "${PROJECT_SOURCE_DIR}/resources/FrameBenderTest.cfg"        
+    $<TARGET_FILE_DIR:gl-frame-bender-tests>)
+
+add_custom_command(TARGET gl-frame-bender-tests POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory       
+    "${PROJECT_SOURCE_DIR}/glsl"        
+    $<TARGET_FILE_DIR:gl-frame-bender-tests>/glsl)
+
+add_custom_command(TARGET gl-frame-bender-tests POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory       
+    "${PROJECT_SOURCE_DIR}/test_data"        
+    $<TARGET_FILE_DIR:gl-frame-bender-tests>/test_data)
+
+add_custom_command(TARGET gl-frame-bender-tests POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory       
+    "${PROJECT_SOURCE_DIR}/textures"        
+    $<TARGET_FILE_DIR:gl-frame-bender-tests>/textures)
+

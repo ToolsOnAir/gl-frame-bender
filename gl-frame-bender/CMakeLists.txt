@@ -30,3 +30,23 @@ ELSE(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 	target_link_libraries(gl-frame-bender PRIVATE ${Protobuf_LIBRARIES})
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
+add_custom_command(TARGET gl-frame-bender POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different        
+    "${PROJECT_SOURCE_DIR}/resources/PlayerPreset.cfg"        
+    $<TARGET_FILE_DIR:gl-frame-bender>)
+
+add_custom_command(TARGET gl-frame-bender POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory       
+    "${PROJECT_SOURCE_DIR}/glsl"        
+    $<TARGET_FILE_DIR:gl-frame-bender>/glsl)
+
+add_custom_command(TARGET gl-frame-bender POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory       
+    "${PROJECT_SOURCE_DIR}/test_data"        
+    $<TARGET_FILE_DIR:gl-frame-bender>/test_data)
+
+add_custom_command(TARGET gl-frame-bender POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory       
+    "${PROJECT_SOURCE_DIR}/textures"        
+    $<TARGET_FILE_DIR:gl-frame-bender>/textures)
+
