@@ -41,8 +41,6 @@ ELSE(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread")
 
-	find_package(GLM REQUIRED)
-
 	pkg_search_module(GLFW REQUIRED glfw3)
 
 	pkg_search_module(DEVIL REQUIRED IL)
