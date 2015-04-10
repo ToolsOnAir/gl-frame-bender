@@ -170,22 +170,22 @@ fb::ProgramOptions::ProgramOptions(int argc, const char* argv[]) {
             " stage. This value added by 'pipeline.download.map_to_copy_queue_token_count' "
             "has to be the sum of 'pipeline.download.gl_pbo_count'.")
             ("player.width",
-            po::value<size_t>(&player_width_)->default_value(320),
+            po::value<size_t>(&player_width_)->default_value(640),
             "Width of the player screen.")
             ("player.height",
-            po::value<size_t>(&player_height_)->default_value(240),
+            po::value<size_t>(&player_height_)->default_value(360),
             "Height of the player screen.")
             ("player.is_fullscreen",
             po::value<bool>(&player_is_fullscreen_)->default_value(false),
             "If set to true, the player will start in fullscreen mode.")
             ("player.sync_to_vertical_refresh",
-            po::value<bool>(&player_use_vsync_)->default_value(false),
+            po::value<bool>(&player_use_vsync_)->default_value(true),
             "If set to true, the player will synchronize with the VSync interval.")
             ("program.glsl_sources_location", 
             po::value<std::string>(&glsl_folder_)->default_value("./glsl"), 
             "Sets the folder in which GLSL source files should be searched for.")
             ("player.is_enabled", 
-            po::value<bool>(&blit_to_player_)->default_value(false), 
+            po::value<bool>(&blit_to_player_)->default_value(true), 
             "If set to true, each rendered video frame will be blit to "
             "player's framebuffer and the player will use double-buffering.")
             ("render.format_conversion.v210.bitextraction_in_shader_is_enabled", 
@@ -194,16 +194,16 @@ fb::ProgramOptions::ProgramOptions(int argc, const char* argv[]) {
             "compressed word into three 10-bit components. If false, a "
             "GL_UNSIGNED_INT_2_10_10_10_REV will be used for unpacking. ")
             ("input.sequence.pixel_format",
-            po::value<fb::ImageFormat::PixelFormat>(&input_sequence_pixel_format_)->default_value(ImageFormat::PixelFormat::RGB_8BIT),
+            po::value<fb::ImageFormat::PixelFormat>(&input_sequence_pixel_format_)->default_value(ImageFormat::PixelFormat::YUV_10BIT_V210),
             "The pixel format of the input sequence. Use -help for a list of supported pixel format.")
             ("program.sequences_location",
-            po::value<std::string>(&input_sequences_folder_)->default_value("."),
+            po::value<std::string>(&input_sequences_folder_)->default_value("test_data"),
             "The folder in which input sequences are stored. Everything sequence_name + pattern is relative to this.")
             ("input.sequence.id",
-            po::value<std::string>(&input_sequence_name_)->default_value("sequence"),
+            po::value<std::string>(&input_sequence_name_)->default_value("horse_v210_1920_1080p_short"),
             "The name (i.e. folder) of the sequence within the input sequence folder.")
             ("input.sequence.file_pattern",
-            po::value<std::string>(&input_sequence_pattern_)->default_value(".*\\.rgb8"),
+            po::value<std::string>(&input_sequence_pattern_)->default_value(".*\\.v210"),
             "The pattern of the sequence frames to load.")
             ("input.sequence.width",
             po::value<size_t>(&input_sequence_width_)->default_value(1920),
@@ -212,10 +212,10 @@ fb::ProgramOptions::ProgramOptions(int argc, const char* argv[]) {
             po::value<size_t>(&input_sequence_height_)->default_value(1080),
             "Image height of the input sequence's frames.")
             ("input.sequence.loop_count",
-            po::value<size_t>(&input_sequence_loop_count_)->default_value(1),
+            po::value<size_t>(&input_sequence_loop_count_)->default_value(10),
             "Number of times to replay the input sequence.")
             ("input.sequence.image_origin",
-            po::value<fb::ImageFormat::Origin>(&input_sequence_origin_)->default_value(fb::ImageFormat::Origin::LOWER_LEFT),
+            po::value<fb::ImageFormat::Origin>(&input_sequence_origin_)->default_value(fb::ImageFormat::Origin::UPPER_LEFT),
             "Image origin of the input sequence's frames.")
             ("input.sequence.frame_duration",
             po::value<fb::Time>(&input_sequence_frame_duration_)->default_value(fb::Time(1, 25)),
@@ -271,7 +271,7 @@ fb::ProgramOptions::ProgramOptions(int argc, const char* argv[]) {
             po::value<bool>(&enable_download_gl_timer_queries_)->default_value(false),
             "Enables the use of GL timer queries to report on GL-side timings of the download operations.")
             ("render.format_conversion_mode",
-            po::value<Mode>(&format_conversion_mode_)->default_value(Mode::glsl_330),
+            po::value<Mode>(&format_conversion_mode_)->default_value(Mode::glsl_420_no_buffer_attachment_ext),
             "Sets the mode to use for the format conversion. Note that the hardware is required to support it. Otherwise the program will exit with an error.")
             ("render.format_conversion.v210.decode.glsl_430_work_group_size",
             po::value<size_t>(&v210_decode_glsl_430_work_group_size_)->default_value(16),
@@ -296,7 +296,7 @@ fb::ProgramOptions::ProgramOptions(int argc, const char* argv[]) {
             po::value<fb::ChromaFilter>(&v210_encode_glsl_chroma_filter_)->default_value(ChromaFilter::basic),
             "Sets the complexity of the filter for YCbCr 422 encoding (decimation filter).")
             ("player.user_input_is_enabled",
-            po::value<bool>(&enable_window_user_input_)->default_value(false),
+            po::value<bool>(&enable_window_user_input_)->default_value(true),
             "Must be enabled in order to react to user input evenst (mouse/keyboard).")
             ("output.is_enabled",
             po::value<bool>(&enable_write_output_)->default_value(false),
