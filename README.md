@@ -33,7 +33,7 @@ linearly-coded RGB are implemented in multiple variations (GLSL 3.3, 4.2 and
 algorithms more efficiently.
 
 *DISCLAIMER*: Please note that this code has emerged from an academic project
-(see [further documentation][further documentation]), and has been used solely
+(see [further documentation](#further)), and has been used solely
 for the purpose of testing and measuring the performance of certain OpenGL
 video processing algorithms. The author does not recommend to use this
 framework in a more generic video processing scenario. gl-frame-bender is
@@ -79,8 +79,7 @@ library
 
 `./glsl contains` the GLSL shaders for format conversion and rendering. Note
 that the framework will preprocess those shaders before they are actually being
-loaded by OpenGL (i.e. using the fb_include tag, see [here][Accessing flattened
-shaders]).
+loaded by OpenGL (i.e. using the fb_include tag, see [here](#shaders)).
 
 `./resources` contains a bunch of preset configuration files, which you can
 use via the "-c" command line argument with gl-frame-bender
@@ -89,8 +88,8 @@ use via the "-c" command line argument with gl-frame-bender
 runs and for visualizing the performance trace files
 
 `./test_data` contains raw, uncompressed video frames test data that are used
-mainly for testing. You [can acquire larger test sequences][larger test
-sequences] as well for playback.
+mainly for testing. You [can acquire larger test sequences](#running) as well
+for playback.
 
 `./textures` has images that are used for the overlay rendering operation
 
@@ -204,7 +203,7 @@ pacing of the data flow, the test-sequence will be played back at 60hz.
 * SimpleBenchmarkPreset.cfg: A preset that deactivates the player option, and
   activates the performance tracing paths.
 
-### Running the player mode
+### <a name="running"></a>Running the player mode
 
 Start gl-frame-bender using `gl-frame-bender -c PlayerPreset.cfg`.
 
@@ -232,8 +231,8 @@ To run a single simple benchmark run, execute `gl-frame-bender -c
 SimpleBenchmarkPreset.cfg`. This will create a trace file in the same folder
 named `trace.fbt` and print out the average throughput on standard output.
 
-Accessing flattened shaders
----------------------------
+<a name="shaders"></a>Accessing flattened shaders
+-------------------------------------------------
 The `glsl` folder of the source distribution contains shaders that use a custom
 preprocessor-like command `#fb_include`. This command includes GLSL snippets
 from other files and is not valid GLSL and needs to be flattened into standard
@@ -263,8 +262,8 @@ See `scripts/run_analysis.py`.
 
 TODO: Update parts about batched performance traces, CSV summaries, etc.
 
-Further documentation 
----------------------
+<a name="further"></a>Further documentation 
+-------------------------------------------
 
 Presentation talk about gl-frame-bender at NVIDIA GTC 2015:
 
