@@ -79,7 +79,8 @@ library
 
 `./glsl contains` the GLSL shaders for format conversion and rendering. Note
 that the framework will preprocess those shaders before they are actually being
-loaded by OpenGL (i.e. using the fb_include tag).
+loaded by OpenGL (i.e. using the fb_include tag, see [here][Accessing flattened
+shaders]).
 
 `./resources` contains a bunch of preset configuration files, which you can
 use via the "-c" command line argument with gl-frame-bender
@@ -230,6 +231,23 @@ All test sequences were losslessly converted from the [EBU UHD-1 test sequences]
 To run a single simple benchmark run, execute `gl-frame-bender -c
 SimpleBenchmarkPreset.cfg`. This will create a trace file in the same folder
 named `trace.fbt` and print out the average throughput on standard output.
+
+Accessing flattened shaders
+---------------------------
+The `glsl` folder of the source distribution contains shaders that use a custom
+preprocessor-like command `#fb_include`. This command includes GLSL snippets
+from other files and is not valid GLSL and needs to be flattened into standard
+GLSL first. The reason for that is that different combinations of shaders are
+generated, dependening on the targeted GLSL version, but which might share some
+GLSL snippets. During runtime, `#fb_include` tags are resolved and the
+flattened shaders are written to a temporary location (e.g.
+`/tmp/fb_v210_decode_glsl_420.frag`). If you would like to inspect the shaders,
+you can look up the actual written location in gl-frame-bender's log file
+(usually FrameBender.log). Look for a line similar to 
+
+```
+(UtilsGL.cpp:165) Wrote '/tmp/fb_v210_decode_glsl_420.frag'.
+```
 
 Visualizing performance traces 
 ------------------------------
