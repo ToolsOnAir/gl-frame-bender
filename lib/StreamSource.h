@@ -112,7 +112,7 @@ namespace toa {
 
         private:
 
-            virtual void frame_has_been_used(const Frame& frame);
+            virtual void frame_has_been_used(const Frame& frame) override;
 
             std::queue<Frame> frames_repository_;
             size_t num_frames_prefetched_;
